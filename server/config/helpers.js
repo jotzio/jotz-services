@@ -5,9 +5,10 @@ module.exports = {
     next(err);
   },
   errorHandler: function(err, req, res, next) {
-    res.status(err.status).send({
-      status: err.status,
-      message: err.message
+    var status = err.status || 500;
+    res.status(status).send({
+      status: status,
+      message: err
     });
   },
   githubOptionsHandler: function(accessToken, refreshToken, profile, done) {
