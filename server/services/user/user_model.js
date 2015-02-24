@@ -4,26 +4,28 @@ var Q = require('q');
 var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
-  appId: { type: String, required: true, inde: { unique: true } },
-  githubId: { type: String, unique: true },
+  appId: { type: String, required: true, index: { unique: true } },
+  password: { type: String },
+  githubId: { type: String },
   salt: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
 
 UserSchema.pre('save', function(next) {
-  if (!this.isModified('githubId')) {
+  if (!this.isModified('appId')) {
     return next();
   }
   bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
     if (err) {
       return next(err);
     } else {
-      bcrypt.hash(this.githubId, salt, null, function(err, hash) {
+      var password = this.appId + process.env.APP_ID_PEPPER;
+      bcrypt.hash(password, salt, null, function(err, hash) {
         if (err) {
           return next(err);
         } else {
-          this.githubId = hash;
+          this.password = hash;
           this.salt = salt;
           next();
         }
@@ -32,9 +34,11 @@ UserSchema.pre('save', function(next) {
   }.bind(this));
 });
 
-UserSchema.methods.compareGithubId = function(attempted) {
+UserSchema.methods.compareAppId = function(attempted) {
   var defer = Q.defer();
-  bcrypt.compare(attempted, this.githubId, function(err, isMatch) {
+  var saved = this.password;
+  var password = attempted + process.env.APP_ID_PEPPER;
+  bcrypt.compare(password, saved, function(err, isMatch) {
     if (err) {
       defer.reject(err);
     } else {
