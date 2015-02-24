@@ -34,9 +34,11 @@ UserSchema.pre('save', function(next) {
   }.bind(this));
 });
 
-UserSchema.methods.compareGithubId = function(attempted) {
+UserSchema.methods.compareAppId = function(attempted) {
   var defer = Q.defer();
-  bcrypt.compare(attempted, this.githubId, function(err, isMatch) {
+  var saved = this.password;
+  var password = attempted + process.env.APP_ID_PEPPER;
+  bcrypt.compare(password, saved, function(err, isMatch) {
     if (err) {
       defer.reject(err);
     } else {
