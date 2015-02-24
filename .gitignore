@@ -30,7 +30,7 @@ node_modules
 .floo
 .flooignore
 
-server/config/env.js
+.env
 
 # Users Environment Variables
 .lock-wscript

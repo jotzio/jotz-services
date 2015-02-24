@@ -4,7 +4,7 @@ module.exports = {
     console.error(err.status, err.message);
     next(err);
   },
-  errorHandler: function(err, req, res) {
+  errorHandler: function(err, req, res, next) {
     res.status(err.status).send({
       status: err.status,
       message: err.message

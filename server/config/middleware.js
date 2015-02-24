@@ -31,4 +31,8 @@ module.exports = function (app, express) {
   // API error handling
   app.use(helpers.errorLogger);
   app.use(helpers.errorHandler);
+
+  app.get('/*', function(req, res, next) {
+    res.send('Jotz-Services');
+  });
 };
