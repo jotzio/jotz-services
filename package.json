@@ -17,6 +17,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.4.3",
     "browser-sync": "^1.5.7",
+    "dotenv": "0.5.1",
     "express": "^4.4.5",
     "gulp": "^3.8.5",
     "gulp-concat": "^2.4.3",
