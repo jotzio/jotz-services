@@ -1,0 +1,48 @@
+{
+  "name": "jotz-services",
+  "version": "0.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "jotz",
+  "contributors": [
+    "Omar Alvarez",
+    "Raghuvir Kasturi",
+    "Clark Feusier",
+    "Ryan Leung"
+  ],
+  "license": "Copyright 2015, Jotz, all rights reserved.",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.4.3",
+    "browser-sync": "^1.5.7",
+    "express": "^4.4.5",
+    "gulp": "^3.8.5",
+    "gulp-concat": "^2.4.3",
+    "gulp-if": "^1.2.5",
+    "gulp-jshint": "^1.6.3",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-notify": "^2.1.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-shell": "^0.2.7",
+    "gulp-uglify": "^1.1.0",
+    "jshint-stylish": "^0.2.0",
+    "jwt-simple": "^0.2.0",
+    "mongoose": "^3.8.12",
+    "morgan": "^1.1.1",
+    "passport": "^0.2.1",
+    "passport-github": "^0.1.5",
+    "q": "^1.1.2",
+    "request": "^2.36.0",
+    "require-dir": "^0.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jotzio/jotz-services"
+  }
+}
