@@ -1,6 +1,5 @@
 var Q = require('q');
 var User = require('./user_model');
-var bcrypt = require('bcrypt-nodejs');
 
 
 // Private User API
