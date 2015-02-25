@@ -1,17 +1,14 @@
-var auth = require('../auth/auth_api');
 var pp = require('passport');
-
-var ghAuthOptions = {
-  session: false,
-  scope: 'user,gist'
-};
-
-var ghCbOptions = {
-  failureRedirect: '/ghlogin',
-  session: false
-};
+var auth = require('../auth/auth_api');
+var ghAuthConfig = require('../auth/gh_auth_config');
 
 module.exports = function(app) {
-  app.get('/ghlogin', pp.authenticate('github', ghAuthOptions));
-  app.get('/github/cb', pp.authenticate('github', ghCbOptions), auth.ghOAuthHandler);
+  // Kick off GitHub OAuth Flow
+  app.get('/ghlogin',
+    pp.authenticate('github', ghAuthConfig.ghAuthOptions));
+  // Handle GitHub OAuth Success Callback
+  app.get('/github/cb',
+    pp.authenticate('github', ghAuthConfig.ghCbOptions), auth.ghOAuthHandler);
+  app.get('/userdata',
+    pp.authenticate('github', ghAuthConfig.ghAuthOptions));
 };

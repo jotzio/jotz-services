@@ -1,39 +1,35 @@
 var Q = require('q');
 var User = require('./user_model');
 
+// TODO: update with final requirements
 
 // Private User API
 var api = {
+  createUser: function(userData, cb){
+    var createUser = Q.nbind(User.create, User);
+    createUser(userData).then(function(user) {
+      cb(api.safeUser(user));
+    }).fail(api.logError);
+  },
   logError: function(err) {
     console.error(err);
   },
-  findUser: function(appId, cb) {
-    var findUser = Q.nbind(User.findOne, User);
-    findUser({ appId: appId }).then(function(user) {
+  findUser: function(key, val, cb) {
+    var findUser = Q.nbind(User.findOne, User), query = {};
+    query[key] = val;
+    findUser(query).then(function(user) {
       if (!user) {
         cb(null);
       } else {
-        api.authUser(appId, user, cb);
-      }
-    }).fail(api.logError);
-  },
-  authUser: function(appId, user, cb) {
-    user.compareAppId(appId).then(function(match) {
-      if (match) {
         cb(api.safeUser(user));
       }
-    }).fail(api.logError);
-  },
-  createUser: function(appId, cb){
-    var createUser = Q.nbind(User.create, User);
-    createUser({ appId: appId }).then(function(user) {
-      cb(api.safeUser(user));
     }).fail(api.logError);
   },
   safeUser: function(user) {
     return {
       _id: user._id,
       appId: user.appId,
+      githubId: user.githubId,
       updatedAt: user.updatedAt,
       createdAt: user.createdAt
     };
@@ -42,10 +38,10 @@ var api = {
 
 // Public User API
 module.exports = {
-  isRegistered: function(appId, cb) {
-    api.findUser(appId, cb);
+  createUser: function(userData, cb) {
+    api.createUser(userData, cb);
   },
-  createUser: function(appId, cb) {
-    api.createUser(appId, cb);
+  findUser: function(key, val, cb) {
+    api.findUser(key, val, cb);
   }
 };

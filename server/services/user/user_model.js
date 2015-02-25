@@ -3,6 +3,8 @@ var bcrypt = require('bcrypt-nodejs');
 var Q = require('q');
 var SALT_WORK_FACTOR = 10;
 
+// TODO: update schema based on final requirements
+
 var UserSchema = new mongoose.Schema({
   appId: { type: String, required: true, index: { unique: true } },
   password: { type: String },
