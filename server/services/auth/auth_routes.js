@@ -8,8 +8,5 @@ module.exports = function(app) {
     pp.authenticate('github', ghAuthConfig.ghAuthOptions));
   // Handle GitHub OAuth Success Callback
   app.get('/github/cb',
-    pp.authenticate('github', ghAuthConfig.ghCbOptions), auth.ghOAuthHandler);
-  // Retrieve user's githubId and ghAccessToken
-  app.get('/userdata',
-    pp.authenticate('github', ghAuthConfig.ghAuthOptions));
+    pp.authenticate('github', ghAuthConfig.ghCbOptions), auth.handleAuthorization);
 };
