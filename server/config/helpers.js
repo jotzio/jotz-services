@@ -13,6 +13,7 @@ module.exports = {
   },
   githubOptionsHandler: function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
+      profile.accessToken = accessToken;
       return done(null, profile);
     });
   }
