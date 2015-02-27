@@ -1,31 +1,43 @@
 var userAPI = require('../user/user_api');
+var request = require('request');
+
 
 // Private Authentication API
 var api = {
-  ghOAuthHandler: function(req, res, next) {
+  handleAuthorization: function(req, res, next) {
     var userData = {
       githubId: req.user.id,
-      ghAccessToken: req.query.code
+      ghAccessToken: req.user.accessToken
     };
-    userAPI.findUser('githubId', userData.githubId, function(user) {
-      if (!user) {
-        // userAPI.createUser(userData);
-        // send 200 status
-      } else {
-        // update user's access token
-        // res.sendStatus(200).send(userData.githubId, userData.ghAccessToken);
-      }
-      // FOR TESTING GH OAUTH FLOW - REMOVE ME
-      res.sendStatus(200);
+    var query = { githubId: userData.githubId };
+    userAPI.findUser(query, api.respondWithUser.bind(api, res, userData));
+  },
+  createNewUser: function(userData, res) {
+    userAPI.createUser(userData, function() {
+      res.status(200).send(JSON.stringify(userData));
     });
+  },
+  updateUser: function(userData) {
+    var query = { githubId: userData.githubId };
+    var attrs = { ghAccessToken: userData.ghAccessToken };
+    userAPI.updateUser(query, attrs);
+  },
+  sendUser: function(res, userData) {
+    res.status(200).send(JSON.stringify(userData));
+  },
+  respondWithUser: function(res, userData, user) {
+    if (!user) {
+      api.createNewUser(userData, res);
+    } else {
+      api.updateUser(userData);
+      api.sendUser(res, userData);
+    }
   }
-  // TODO: '/api/auth/userdata' handler
-  // hits '/api/auth/ghlogin' (should autoreturn gh id and access token)
 };
 
 // Public Authentication API
 module.exports = {
-  ghOAuthHandler: function(req, res, next) {
-    api.ghOAuthHandler(req, res, next);
+  handleAuthorization: function(req, res, next) {
+    api.handleAuthorization(req, res, next);
   }
 };
