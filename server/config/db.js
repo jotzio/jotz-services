@@ -3,13 +3,13 @@ var env = require('./env');
 
 var db = (function() {
   // Private
-  var registerListeners = function(DB) {
-    DB.on('error', console.error.bind(console, 'mongo connection error:'));
-    DB.on('open', console.log.bind(console, 'mongo hooked'));
-  };
   var connectDb = function() {
     mongoose.connect(env.db);
     return mongoose.connection;
+  };
+  var registerListeners = function(DB) {
+    DB.on('error', console.error.bind(console, 'mongo connection error:'));
+    DB.on('open', console.log.bind(console, 'mongo hooked'));
   };
 
   // Public
