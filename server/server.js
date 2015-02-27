@@ -1,17 +1,11 @@
 var express = require('express');
-var mongoose = require('mongoose');
-
+var db = require('./config/db');
 var app = express();
 
-// Database setup (dev & production)
-var pEnv = process.env;
-var devDb = 'mongodb://localhost/jotz-services-dev';
-mongoose.connect(pEnv.MONGOLAB_URI || pEnv.MONGOHQ_URL  || devDb);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'mongo connection error:'));
-db.on('open', console.log.bind(console, 'mongo hooked'));
+// Setup and Connect Db
+db.startDbConnection();
 
-// Middleware setup
+// Configure and Start Server
 require('./config/middleware.js')(app, express);
 
 module.exports = app;
