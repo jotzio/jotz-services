@@ -1,32 +1,38 @@
 var request = require('request');
 
-module.exports = {
-  publish: function(req, res, next) {
-    var ghAccessToken = req.body.ghAccessToken;
-    var githubId = req.body.githubId;
-    var gistContent = req.body.noteBlock;
-    var key = "test-gist." + gistContent.language;
+var api = {
+  prepareGistload: function(req) {
+    var key = "test-gist." + req.body.noteBlock.language;
     var gist = {
       description: "test gist for api testing",
       public: true,
       files: {}
     };
-    gist.files[key] = {
-      content: gistContent
-    };
-    var options = {
+    gist.files[key] = { content: req.body.noteBlock.content };
+    return JSON.stringify(gist);
+  },
+  prepareAccessToken: function(req) {
+    return req.body.ghAccessToken;
+  },
+  prepareOptions: function(req) {
+    return {
+      url: 'https://api.github.com/gists?access_token=' + api.prepareAccessToken(req),
       method: 'POST',
-      url: 'https://api.github.com/gists?access_token=' + ghAccessToken,
-      data: JSON.stringify(gist),
+      body: api.prepareGistload(req),
       headers: { 'User-Agent': 'Jotz-Services' }
     };
-
+  },
+  publish: function(req, res, next) {
+    request(api.prepareOptions(req), function (error, response, body){
+      console.log(response);
+    });
     // TODO send correct response to desktop app
-    // TODO publish gist to GH
-    // TODO handle response from GH
-    //request(options, function(err, resp, body) {
-    //  console.log(arguments);
-    //});
-    // TODO refactor
+  }
+};
+
+
+module.exports = {
+  publish: function(req, res, next) {
+    api.publish(req, res, next);
   }
 };
