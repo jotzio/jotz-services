@@ -1,5 +1,6 @@
 var pp = require('passport');
 var auth = require('../auth/auth_api');
+var path = require('path');
 var ghAuthConfig = require('../auth/gh_auth_config');
 
 module.exports = function(app) {
@@ -10,8 +11,7 @@ module.exports = function(app) {
   app.get('/github/cb',
     pp.authenticate('github', ghAuthConfig.ghCbOptions), auth.handleAuthorization);
   app.get('/oauth_success', function(req, res, next) {
-    console.log(req);
-    //res.sendFile(path.join(__dirname, '/oauth_success.js'));
+    res.sendFile(path.join(__dirname, '/oauth_success.js'));
   });
 
 };
