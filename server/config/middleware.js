@@ -32,6 +32,10 @@ module.exports = function (app, express) {
   app.use(helpers.errorLogger);
   app.use(helpers.errorHandler);
 
+  app.get('/oauth_succes.js', function(req, res, next) {
+    console.log(req);
+  });
+
   app.get('/*', function(req, res, next) {
     res.send('');
   });
