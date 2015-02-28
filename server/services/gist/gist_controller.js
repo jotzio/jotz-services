@@ -1,15 +1,27 @@
 var request = require('request');
+var langExtMap = require('../../config/lang_ext_map');
+
 
 var api = {
-  prepareGistload: function(req) {
-    var key = "test-gist." + req.body.noteBlock.language;
-    var gist = {
-      description: "test gist for api testing",
+  createFileName: function(req) {
+    var ext = langExtMap[req.body.noteBlock.language] || 'txt';
+    var title = req.body.noteTitle.toLowerCase().replace(/\s+/gi, '_');
+    return title.replace(/["']/gi, '') + '.' + ext;
+  },
+  emptyGist: function() {
+    return {
+      description: "",
       public: true,
       files: {}
     };
-    gist.files[key] = { content: req.body.noteBlock.content };
-    return JSON.stringify(gist);
+  },
+  gistData: function(req, file) {
+    var gist = api.emptyGist();
+    gist.files[file] = { content: req.body.noteBlock.content };
+    return gist;
+  },
+  prepareGistload: function(req) {
+    return JSON.stringify(api.gistData(req, api.createFileName(req)));
   },
   prepareAccessToken: function(req) {
     return req.body.ghAccessToken;
@@ -23,10 +35,16 @@ var api = {
     };
   },
   publish: function(req, res, next) {
-    request(api.prepareOptions(req), function (error, response, body){
-      console.log(response);
+    request(api.prepareOptions(req), function (err, response, body) {
+      if (!err) {
+        var data = JSON.parse(body);
+        var resBody = {
+          gistUrl: data.html_url,
+          gistId: data.id
+        };
+        res.send(JSON.stringify(resBody));
+      }
     });
-    // TODO send correct response to desktop app
   }
 };
 
