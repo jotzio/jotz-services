@@ -5,7 +5,7 @@ module.exports = {
     scope: 'user,gist'
   },
   ghCbOptions: {
-    failureRedirect: '/ghlogin',
+    failureRedirect: '/api/auth/ghlogin',
     session: false
   }
 };
