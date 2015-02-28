@@ -33,6 +33,6 @@ module.exports = function (app, express) {
   app.use(helpers.errorHandler);
 
   app.get('/*', function(req, res, next) {
-    res.send('Jotz-Services');
+    res.send('');
   });
 };
