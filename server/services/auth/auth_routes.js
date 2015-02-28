@@ -10,7 +10,8 @@ module.exports = function(app) {
   app.get('/github/cb',
     pp.authenticate('github', ghAuthConfig.ghCbOptions), auth.handleAuthorization);
   app.get('/oauth_success', function(req, res, next) {
-    res.sendFile(path.join(__dirname, '/oauth_success.js'));
+    console.log(req);
+    //res.sendFile(path.join(__dirname, '/oauth_success.js'));
   });
 
 };
