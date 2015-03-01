@@ -9,9 +9,8 @@ var api = {
       githubId: req.user.id,
       ghAccessToken: req.user.accessToken
     };
-    console.log(userData);
-    //var query = { githubId: userData.githubId };
-    //userAPI.findUser(query, api.respondWithUser.bind(api, res, userData));
+    var query = { githubId: userData.githubId };
+    userAPI.findUser(query, api.respondWithUser.bind(api, res, userData));
   },
   createNewUser: function(userData, res) {
     userAPI.createUser(userData, function() {

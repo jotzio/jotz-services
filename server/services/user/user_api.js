@@ -8,14 +8,15 @@ var api = {
     console.error(err);
   },
   findUser: function(query, cb) {
-    var findUser = Q.nbind(User.findOne, User);
-    findUser(query).then(function(user) {
-      if (!user) {
-        cb(null);
-      } else {
-        cb(api.safeUser(user));
-      }
-    }).fail(api.logError);
+    console.log(query);
+    //var findUser = Q.nbind(User.findOne, User);
+    //findUser(query).then(function(user) {
+    //  if (!user) {
+    //    cb(null);
+    //  } else {
+    //    cb(api.safeUser(user));
+    //  }
+    //}).fail(api.logError);
   },
   createUser: function(userData, cb){
     var createUser = Q.nbind(User.create, User);
