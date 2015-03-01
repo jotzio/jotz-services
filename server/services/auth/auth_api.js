@@ -16,8 +16,8 @@ var api = {
     userAPI.createUser(userData, function() {
       var data = '<html>' +
                    '<body>' +
-                     JSON.stringify(userData)
-                     '<script src="oauth_success.js"></script>'
+                     JSON.stringify(userData) +
+                     '<script src="oauth_success.js"></script>' +
                    '</body>' +
                   '</html>';
       res.status(200).send(data);
@@ -31,8 +31,8 @@ var api = {
   sendUser: function(res, userData) {
     var data = '<html>' +
                  '<body>' +
-                   JSON.stringify(userData)
-                   '<script src="oauth_success.js"></script>'
+                   JSON.stringify(userData) +
+                   '<script src="oauth_success.js"></script>' +
                  '</body>' +
                 '</html>';
     res.status(200).send(data);
