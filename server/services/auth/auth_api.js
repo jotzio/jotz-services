@@ -16,11 +16,10 @@ var api = {
     userAPI.createUser(userData, function() {
       var data = '<html>' +
           '<body>' +
-          JSON.stringify(userData) +
           '</body>' +
           '<script>' +
           'var ipc = require("ipc");' +
-          'ipc.send("body-scraped", document.body.innerHTML);' +
+          'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
           '</script>' +
           '</html>';
       res.status(200).send(data);
@@ -34,11 +33,10 @@ var api = {
   sendUser: function(res, userData) {
     var data = '<html>' +
         '<body>' +
-        JSON.stringify(userData) +
         '</body>' +
         '<script>' +
         'var ipc = require("ipc");' +
-        'ipc.send("body-scraped", document.body.innerHTML);' +
+        'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
         '</script>' +
         '</html>';
     res.status(200).send(data);
