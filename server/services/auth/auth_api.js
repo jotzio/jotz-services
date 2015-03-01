@@ -14,7 +14,15 @@ var api = {
   },
   createNewUser: function(userData, res) {
     userAPI.createUser(userData, function() {
-      res.status(200).send(JSON.stringify(userData));
+      var data = '<html>' +
+          '<body>' +
+          '</body>' +
+          '<script>' +
+          'var ipc = require("ipc");' +
+          'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
+          '</script>' +
+          '</html>';
+      res.status(200).send(data);
     });
   },
   updateUser: function(userData) {
@@ -23,7 +31,15 @@ var api = {
     userAPI.updateUser(query, attrs);
   },
   sendUser: function(res, userData) {
-    res.status(200).send(JSON.stringify(userData));
+    var data = '<html>' +
+        '<body>' +
+        '</body>' +
+        '<script>' +
+        'var ipc = require("ipc");' +
+        'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
+        '</script>' +
+        '</html>';
+    res.status(200).send(data);
   },
   respondWithUser: function(res, userData, user) {
     if (!user) {

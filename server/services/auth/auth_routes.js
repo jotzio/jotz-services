@@ -1,5 +1,6 @@
 var pp = require('passport');
 var auth = require('../auth/auth_api');
+var path = require('path');
 var ghAuthConfig = require('../auth/gh_auth_config');
 
 module.exports = function(app) {

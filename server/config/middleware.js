@@ -21,8 +21,8 @@ module.exports = function (app, express) {
   app.use(pp.initialize());
 
   // API router registrations
-  app.use('/api/gists', gistRouter);
   app.use('/api/auth', authRouter);
+  app.use('/api/gists', gistRouter);
 
   // Inject routers into respective route files
   require('../services/auth/auth_routes')(authRouter);
