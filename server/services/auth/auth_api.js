@@ -42,12 +42,13 @@ var api = {
     res.status(200).send(data);
   },
   respondWithUser: function(res, userData, user) {
-    if (!user) {
-      api.createNewUser(userData, res);
-    } else {
-      api.updateUser(userData);
-      api.sendUser(res, userData);
-    }
+    console.log(arguments);
+    //if (!user) {
+    //  api.createNewUser(userData, res);
+    //} else {
+    //  api.updateUser(userData);
+    //  api.sendUser(res, userData);
+    //}
   }
 };
 
