@@ -17,7 +17,7 @@ var api = {
       }
     }).fail(api.logError);
   },
-  createUser: function(userData, cb){
+  createUser: function(userData, cb) {
     var createUser = Q.nbind(User.create, User);
     createUser(userData).then(function(user) {
       cb(api.safeUser(user));
