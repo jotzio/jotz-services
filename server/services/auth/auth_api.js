@@ -42,7 +42,7 @@ var api = {
     res.status(200).send(data);
   },
   respondWithUser: function(res, userData, user) {
-    console.log(arguments);
+    console.log(user);
     //if (!user) {
     //  api.createNewUser(userData, res);
     //} else {
