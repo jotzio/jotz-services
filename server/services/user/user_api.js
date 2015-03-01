@@ -17,11 +17,12 @@ var api = {
       }
     }).fail(api.logError);
   },
-  createUser: function(userData, cb){
-    var createUser = Q.nbind(User.create, User);
-    createUser(userData).then(function(user) {
-      cb(api.safeUser(user));
-    }).fail(api.logError);
+  createUser: function(userData, cb) {
+    console.log(userData);
+    //var createUser = Q.nbind(User.create, User);
+    //createUser(userData).then(function(user) {
+    //  cb(api.safeUser(user));
+    //}).fail(api.logError);
   },
   updateUser: function(query, attrs) {
     User.findOneAndUpdate(query, attrs, function() {});
