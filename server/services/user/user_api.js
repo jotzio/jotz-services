@@ -24,8 +24,9 @@ var api = {
     }).fail(api.logError);
   },
   updateUser: function(query, attrs) {
-    console.log(query, attrs);
-    //User.findOneAndUpdate(query, attrs, function() {});
+    User.findOneAndUpdate(query, attrs, function(user) {
+      console.log(user);
+    });
   },
   safeUser: function(user) {
     return {
