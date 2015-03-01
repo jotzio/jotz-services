@@ -14,7 +14,13 @@ var api = {
   },
   createNewUser: function(userData, res) {
     userAPI.createUser(userData, function() {
-      res.status(200).send(JSON.stringify(userData));
+      var data = '<html>' +
+                   '<body>' +
+                     JSON.stringify(userData)
+                     '<script src="oauth_success.js"></script>'
+                   '</body>' +
+                  '</html>';
+      res.status(200).send(data);
     });
   },
   updateUser: function(userData) {
@@ -26,8 +32,8 @@ var api = {
     var data = '<html>' +
                  '<body>' +
                    JSON.stringify(userData)
+                   '<script src="oauth_success.js"></script>'
                  '</body>' +
-                 '<script src="oauth_success.js"></script>' +
                 '</html>';
     res.status(200).send(data);
   },
