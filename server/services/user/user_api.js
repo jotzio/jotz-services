@@ -20,12 +20,12 @@ var api = {
   createUser: function(userData, cb) {
     var createUser = Q.nbind(User.create, User);
     createUser(userData).then(function(user) {
-      console.log('user:', user, 'userData:', userData);
-      //cb(api.safeUser(user));
+      cb(api.safeUser(user));
     }).fail(api.logError);
   },
   updateUser: function(query, attrs) {
-    User.findOneAndUpdate(query, attrs, function() {});
+    console.log(query);
+    //User.findOneAndUpdate(query, attrs, function() {});
   },
   safeUser: function(user) {
     return {
