@@ -17,7 +17,7 @@ var api = {
       var data = '<html>' +
                    '<body>' +
                      JSON.stringify(userData) +
-                     '<script src="oauth_success.js"></script>' +
+                     '<script>console.log("HEYYYY");</script>' +
                    '</body>' +
                   '</html>';
       res.status(200).send(data);
