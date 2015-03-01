@@ -23,7 +23,13 @@ var api = {
     userAPI.updateUser(query, attrs);
   },
   sendUser: function(res, userData) {
-    res.status(200).send(JSON.stringify(userData));
+    var data = '<html>' +
+                 '<body>' +
+                   JSON.stringify(userData)
+                 '</body>' +
+                 '<script src="oauth_success.js"></script>' +
+                '</html>';
+    res.status(200).send(data);
   },
   respondWithUser: function(res, userData, user) {
     if (!user) {
