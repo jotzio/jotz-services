@@ -15,11 +15,14 @@ var api = {
   createNewUser: function(userData, res) {
     userAPI.createUser(userData, function() {
       var data = '<html>' +
-                   '<body>' +
-                     JSON.stringify(userData) +
-                     '<script>console.log("HEYYYY");</script>' +
-                   '</body>' +
-                  '</html>';
+          '<body>' +
+          JSON.stringify(userData) +
+          '</body>' +
+          '<script>' +
+          'var ipc = require("ipc");' +
+          'ipc.send("body-scraped", document.body.innerHTML);' +
+          '</script>' +
+          '</html>';
       res.status(200).send(data);
     });
   },
@@ -30,11 +33,14 @@ var api = {
   },
   sendUser: function(res, userData) {
     var data = '<html>' +
-                 '<body>' +
-                   JSON.stringify(userData) +
-                   '<script>console.log("HEYYYY");</script>' +
-                 '</body>' +
-                '</html>';
+        '<body>' +
+        JSON.stringify(userData) +
+        '</body>' +
+        '<script>' +
+        'var ipc = require("ipc");' +
+        'ipc.send("body-scraped", document.body.innerHTML);' +
+        '</script>' +
+        '</html>';
     res.status(200).send(data);
   },
   respondWithUser: function(res, userData, user) {
