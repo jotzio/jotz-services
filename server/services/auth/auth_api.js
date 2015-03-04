@@ -4,6 +4,17 @@ var request = require('request');
 
 // Private Authentication API
 var api = {
+  userTemplate: function(userData) {
+    var userTemp = '<html>' +
+        '<body>' +
+        '</body>' +
+        '<script>' +
+        'var ipc = require("ipc");' +
+        'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
+        '</script>' +
+        '</html>';
+    return userTemp;
+  },
   handleAuthorization: function(req, res, next) {
     var userData = {
       githubId: req.user.id,
@@ -14,15 +25,7 @@ var api = {
   },
   createNewUser: function(userData, res) {
     userAPI.createUser(userData, function() {
-      var data = '<html>' +
-          '<body>' +
-          '</body>' +
-          '<script>' +
-          'var ipc = require("ipc");' +
-          'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
-          '</script>' +
-          '</html>';
-      res.status(200).send(data);
+      res.status(200).send(api.userTemplate(userData));
     });
   },
   updateUser: function(userData) {
@@ -31,15 +34,7 @@ var api = {
     userAPI.updateUser(query, attrs);
   },
   sendUser: function(res, userData) {
-    var data = '<html>' +
-        '<body>' +
-        '</body>' +
-        '<script>' +
-        'var ipc = require("ipc");' +
-        'ipc.send("body-scraped", ' + JSON.stringify(userData) + ');' +
-        '</script>' +
-        '</html>';
-    res.status(200).send(data);
+    res.status(200).send(api.userTemplate(userData));
   },
   respondWithUser: function(res, userData, user) {
     if (!user) {

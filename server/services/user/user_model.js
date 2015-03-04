@@ -5,7 +5,7 @@ var SALT_WORK_FACTOR = 10;
 
 
 var UserSchema = new mongoose.Schema({
-  githubId: { type: String, required: true, index: { unique: true } },
+  githubId: { type: String, required: true },
   password: { type: String },
   salt: { type: String },
   ghAccessToken: { type: String },
