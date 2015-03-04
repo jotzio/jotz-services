@@ -45,6 +45,18 @@ var api = {
         res.send(JSON.stringify(resBody));
       }
     });
+  },
+  update: function(req, res, next) {
+    request(api.prepareOptions(req, method), function(err, response, body) {
+      if (!err) {
+        var data = JSON.parse(body);
+        var resBody = {
+          gistUrl: data.html_url,
+          gistId: data.id
+        };
+        res.send(JSON.stringify(resBody));
+      }
+    });
   }
 };
 
