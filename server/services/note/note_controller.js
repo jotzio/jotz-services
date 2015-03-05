@@ -51,7 +51,11 @@ module.exports = {
     });
   },
   display: function(req, res, next) {
-      // if req.note, load note content into template
-      // else, send back error
+    if (req.note) {
+      // TODO send back select note content within a template
+      res.status(200).send(JSON.stringify(req.note.content));
+    } else {
+      // TODO show error page
+    }
   }
 };
