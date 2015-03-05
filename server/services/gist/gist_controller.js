@@ -35,7 +35,13 @@ var api = {
     };
   },
   publish: function(req, res, next) {
-    request(api.prepareOptions(req), function (err, response, body) {
+    var opts = api.prepareOptions(req);
+    var noteGistId = req.body.noteBlock.gistId;
+    if (noteGistId) {
+      opts.method = 'PATCH';
+      opts.url = 'https://api.github.com/gists/'+noteGistId+'?access_token='+api.prepareAccessToken(req);
+    }
+    request(opts, function (err, response, body) {
       if (!err) {
         var data = JSON.parse(body);
         var resBody = {
